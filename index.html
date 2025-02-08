@@ -10,6 +10,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            width: 100vw;
+            overflow: hidden;
             flex-direction: column;
             font-family: 'Arial', sans-serif;
             background-color: pink;
@@ -19,8 +21,19 @@
         h1 {
             color: white;
             font-size: 2em;
+            margin-bottom: 20px;
         }
-        button {
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .yes {
+            background-color: #ff4081;
+            color: white;
+            transition: transform 0.3s ease, font-size 0.3s ease;
+            transform-origin: right center;
             font-size: 1.5em;
             padding: 10px 20px;
             margin: 10px;
@@ -28,22 +41,42 @@
             border-radius: 10px;
             cursor: pointer;
         }
-        .yes {
-            background-color: #ff4081;
-            color: white;
-            transition: font-size 0.3s ease;
-        }
         .no {
             background-color: #ffffff;
             color: #ff4081;
-            font-size: 1.5em; /* No button remains the same size */
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: gold;
+            opacity: 0.9;
+            border-radius: 50%;
+            animation: explode 0.8s ease-out forwards, fall 1.5s ease-in forwards;
+        }
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: translate(var(--x), var(--y)) scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: translate(var(--x2), var(--y2)) scale(1) rotate(360deg); opacity: 1; }
+        }
+        @keyframes fall {
+            0% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
     <h1 id="question">Will you be my Valentine? 💖</h1>
-    <button class="yes" onclick="showLove()">Yes 💕</button>
-    <button class="no" onclick="askAgain()">No 😢</button>
+    <div class="button-container">
+        <button class="yes" onclick="showLove()">Yes 💕</button>
+        <button class="no" onclick="askAgain()">No 😢</button>
+    </div>
     <script>
         let questions = [
             "Are you sure? 😟", 
@@ -53,6 +86,9 @@
             "One last chance? 💕", 
             "Are you absolutely sure? 🧐", 
             "What if I give you chocolates? 🍫", 
+            "What if I give made you pasta? 🍝", 
+            "How about a massage? 💆‍♀️", 
+            "I'll get you your butter garlic prawns? 🍤",
             "What about flowers? 🌹", 
             "I promise to be the best Valentine! 💘", 
             "You know you'll miss me if you say no! 😢", 
@@ -71,7 +107,33 @@
         let index = 0;
 
         function showLove() {
-            document.body.innerHTML = "<h1>Yay! I love you! ❤️🥰</h1>";
+            document.body.innerHTML = "<h1>I LOVE YOU MOREEEEEE! ❤️🥰</h1>";
+            for (let i = 0; i < 30; i++) {
+                let explosionX = Math.random() * 180;
+                let explosionY = Math.random() * 200;
+                for (let j = 0; j < 15; j++) {
+                    let confetti = document.createElement("div");
+                    confetti.classList.add("confetti");
+                    confetti.style.left = `${explosionX}vw`;
+                    confetti.style.top = `${explosionY}vh`;
+                    confetti.style.backgroundColor = ["gold", "red", "pink", "yellow", "white", "blue", "purple"][Math.floor(Math.random() * 7)];
+                    
+                    let angle = Math.random() * 2 * Math.PI;
+                    let speed = Math.random() * 80 + 50;
+                    let x = Math.cos(angle) * speed;
+                    let y = Math.sin(angle) * speed;
+                    let x2 = x * 1.5;
+                    let y2 = y * 1.5 + 100;
+                    
+                    confetti.style.setProperty('--x', `${x}px`);
+                    confetti.style.setProperty('--y', `${y}px`);
+                    confetti.style.setProperty('--x2', `${x2}px`);
+                    confetti.style.setProperty('--y2', `${y2}px`);
+                    
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 2000);
+                }
+            }
         }
 
         function askAgain() {

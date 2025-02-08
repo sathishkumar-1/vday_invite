@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            background-color: pink;
+            text-align: center;
+            user-select: none;
+        }
+        h1 {
+            color: white;
+            font-size: 2em;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .yes {
+            background-color: #ff4081;
+            color: white;
+            transition: font-size 0.3s ease;
+        }
+        .no {
+            background-color: #ffffff;
+            color: #ff4081;
+            font-size: 1.5em; /* No button remains the same size */
+        }
+    </style>
+</head>
+<body>
+    <h1 id="question">Will you be my Valentine? 💖</h1>
+    <button class="yes" onclick="showLove()">Yes 💕</button>
+    <button class="no" onclick="askAgain()">No 😢</button>
+    <script>
+        let questions = [
+            "Are you sure? 😟", 
+            "Really really sure? 🥺", 
+            "Think again! 😢", 
+            "But I love you! 😭", 
+            "One last chance? 💕", 
+            "Are you absolutely sure? 🧐", 
+            "What if I give you chocolates? 🍫", 
+            "What about flowers? 🌹", 
+            "I promise to be the best Valentine! 💘", 
+            "You know you'll miss me if you say no! 😢", 
+            "I'll be very sad... 😭", 
+            "Okay, but reconsider... 😞", 
+            "Just think about how cute we are together! 😍", 
+            "Even the stars think we belong together! ✨", 
+            "Fine, but I’ll keep asking! 🤨", 
+            "I’ll write you a love song! 🎶", 
+            "I’ll watch your favorite movie with you! 🎬", 
+            "I'll cook for you! 🍲", 
+            "This is your last chance… maybe? 😜", 
+            "Saying yes will make me the happiest person ever! 😊", 
+            "Are you really really sure? Last time! 🤞"
+        ];
+        let index = 0;
+
+        function showLove() {
+            document.body.innerHTML = "<h1>Yay! I love you! ❤️🥰</h1>";
+        }
+
+        function askAgain() {
+            if (index < questions.length) {
+                document.getElementById("question").innerText = questions[index];
+                index++;
+            } else {
+                document.getElementById("question").innerText = "Okay fine... but I still love you! 😘";
+            }
+            
+            let yesBtn = document.querySelector('.yes');
+            let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize * 1.2) + "px";
+        }
+    </script>
+</body>
+</html>
